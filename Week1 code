@@ -1,0 +1,69 @@
+#include <stdio.h>
+#define STACK_SIZE 5
+
+
+void push(int s[], int *top, int item) {
+    if (*top == STACK_SIZE - 1) {
+        printf("Stack overflow\n");
+    } else {
+        *top = *top + 1;
+        s[*top] = item;
+    }
+}
+
+
+int pop(int s[], int *top) {
+    if (*top == -1) {
+        printf("Stack underflow\n");
+        return -1;
+    } else {
+        int item_deleted = s[*top];
+        *top = *top - 1;
+        return item_deleted;
+    }
+}
+
+
+void display(int s[], int *top) {
+    if (*top == -1) {
+        printf("Stack is empty, can't display\n");
+    } else {
+        for (int i = *top; i >= 0; i--) {
+            printf("%d ", s[i]);
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int stack[STACK_SIZE];
+    int top = -1;
+    int choice, item;
+
+    while (1) {
+        printf("\n1. Push\n2. Pop\n3. Display\n4. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                printf("Enter the item to push: ");
+                scanf("%d", &item);
+                push(stack, &top, item);
+                break;
+            case 2:
+                item = pop(stack, &top);
+                if (item != -1) {
+                    printf("Popped item: %d\n", item);
+                }
+                break;
+            case 3:
+                display(stack, &top);
+                break;
+            case 4:
+                return 0;
+            default:
+                printf("Invalid choice\n");
+        }
+    }
+}
