@@ -1,0 +1,67 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void bfs(char);
+char a[10][10];
+int vis[10];
+int n;
+
+int main() {
+    int i, j;
+    char src;
+
+    printf("Enter the number of vertices (max 10):\n");
+    scanf("%d", &n);
+
+
+    if (n > 10 || n <= 0) {
+        printf("Number of vertices must be between 1 and 10.\n");
+        return 1;
+    }
+
+    printf("Enter the adjacency matrix (use '0' for no edge and '1' for edge):\n");
+    for (i = 0; i < n; i++) {
+        for (j = 0; j < n; j++) {
+            scanf(" %c", &a[i][j]);
+        }
+        vis[i] = 0;
+    }
+
+    printf("Enter the source vertex (character):\n");
+    scanf(" %c", &src);
+
+
+    if (src < 'A' || src >= 'A' + n) {
+        printf("Invalid source vertex. Please enter a character between A and %c.\n", 'A' + n - 1);
+        return 1;
+    }
+
+    printf("Nodes reachable from source vertex %c:\n", src);
+    bfs(src);
+    printf("\n");
+    return 0;
+}
+
+void bfs(char v) {
+    char q[10];
+    int f = 0, r = 0;
+    int startIndex = v - 'A';
+
+    q[r] = v;
+    vis[startIndex] = 1;
+
+    while (f <= r) {
+        char u = q[f];
+        printf("%c ", u);
+
+        int uIndex = u - 'A';
+        for (int i = 0; i < n; i++) {
+            if (a[uIndex][i] == '1' && vis[i] == 0) {
+                vis[i] = 1;
+                r++;
+                q[r] = 'A' + i;
+            }
+        }
+        f++;
+    }
+}
